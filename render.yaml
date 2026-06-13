@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: sign-language-project
+    runtime: python
+    pythonVersion: "3.10.13"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
