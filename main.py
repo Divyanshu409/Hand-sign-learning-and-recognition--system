@@ -7,7 +7,7 @@ os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 from flask import Flask, render_template, Response, jsonify, request
 import cv2
 import numpy as np
-import tensorflow as tf
+import tflite_runtime.interpreter as tflite
 import base64
 
 app = Flask(__name__)
@@ -30,7 +30,7 @@ print(f"[OK] Loaded {NUM_CLASSES} labels: {labels}")
 # ── TFLite model ──────────────────────────────────────────────────────────────
 TFLITE_PATH = "Model/model.tflite"
 
-interpreter = tf.lite.Interpreter(model_path=TFLITE_PATH)
+interpreter = tflite.Interpreter(model_path=TFLITE_PATH)
 interpreter.allocate_tensors()
 
 input_details  = interpreter.get_input_details()
