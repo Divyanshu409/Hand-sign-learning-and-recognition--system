@@ -9,9 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js" crossorigin="anonymous"></script>
 
 <style>
-/* ===================================================================
-   DESIGN TOKENS — Cyber‑Glass Midnight
-   =================================================================== */
+
 :root {
   --navy:        #081120;
   --navy-2:      #0c1a2e;
@@ -69,7 +67,7 @@ html, body { height: 100%; background: var(--navy); color: var(--t1); font-famil
 @keyframes au3 { 0% { transform: translate(0,0) scale(1) rotate(0deg); } 100% { transform: translate(-40px,50px) scale(1.15) rotate(12deg); } }
 @keyframes au4 { 0% { transform: translate(0,0); } 100% { transform: translate(-30px,60px) scale(1.08); } }
 
-/* ===================================================================  WELCOME HERO  =================================================================== */
+/* ===================================================================  WELCOME   =================================================================== */
 #welcome { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(8,17,32,0.88); backdrop-filter: blur(18px); transition: clip-path 1.1s cubic-bezier(0.76,0,0.24,1), opacity 0.5s; }
 #welcome.hidden { clip-path: circle(0% at 50% 50%); opacity: 0; pointer-events: none; }
 .hero-ring { position: absolute; width: 560px; height: 560px; border-radius: 50%; z-index: 0; pointer-events: none; background: conic-gradient(from 0deg, transparent 0%, rgba(212,175,55,0.35) 18%, rgba(45,212,191,0.25) 36%, rgba(139,92,246,0.2) 54%, transparent 72%, rgba(212,175,55,0.15) 90%, transparent 100%); animation: ringRotate 14s linear infinite; filter: blur(2px); }
@@ -362,11 +360,9 @@ html, body { height: 100%; background: var(--navy); color: var(--t1); font-famil
 .signoff-cam-result.correct-flash .signoff-cam-result-label { color: #6ee7b7; }
 .signoff-cam-result.wrong-flash  .signoff-cam-result-label { color: #fca5a5; }
 
-/* ===================================================================
-   SENTENCE BUILDER GAME — New CSS
-   =================================================================== */
+/* SENTENCE BUILDER GAME — New CSS */
 
-/* ---- Arena Layout ---- */
+
 .sb-arena {
   display: grid;
   grid-template-columns: 340px 1fr;
@@ -390,7 +386,7 @@ html, body { height: 100%; background: var(--navy); color: var(--t1); font-famil
 }
 .sb-cam-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* Animated border ring overlay — holds progress as arc */
+/* Animated border ring overlay */
 .sb-hold-ring {
   position: absolute;
   inset: 0;
@@ -405,7 +401,7 @@ html, body { height: 100%; background: var(--navy); color: var(--t1); font-famil
   stroke-width: 7;
   stroke-linecap: round;
   stroke-dasharray: 283;
-  stroke-dashoffset: 283;  /* starts empty, fills to 0 */
+  stroke-dashoffset: 283;  
   transform-origin: center;
   transform: rotate(-90deg);
   transition: stroke 0.2s;
@@ -1402,17 +1398,12 @@ html, body { height: 100%; background: var(--navy); color: var(--t1); font-famil
 
 <!-- ==================== SCRIPTS ==================== -->
 <script>
-/* ====================================================
-   SPOTLIGHT MOUSE FOLLOW
-   ==================================================== */
+
 document.addEventListener('mousemove', e => {
   document.getElementById('spotlight').style.setProperty('--mx', e.clientX + 'px');
   document.getElementById('spotlight').style.setProperty('--my', e.clientY + 'px');
 });
 
-/* ====================================================
-   CARD 3D TILT
-   ==================================================== */
 function initTilt(el) {
   el.addEventListener('mousemove', e => {
     const r = el.getBoundingClientRect();
@@ -1428,9 +1419,7 @@ function initTilt(el) {
 }
 document.querySelectorAll('.glass-card').forEach(initTilt);
 
-/* ====================================================
-   APP INIT
-   ==================================================== */
+/* APP INIT */
 function initApp() {
   const w = document.getElementById('welcome');
   const a = document.getElementById('app');
@@ -1460,9 +1449,7 @@ function showPage(pageId, el) {
 }
 let lessonLoaded = false;
 
-/* ====================================================
-   LEARNING LAB
-   ==================================================== */
+/*LEARNING LAB */
 function loadCategory(category, btn) {
   document.querySelectorAll('.lesson-tab-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
@@ -1512,9 +1499,7 @@ function openGestureModal(gesture) {
 function closeGestureModal() { document.getElementById('gesture-modal').classList.remove('open'); }
 document.getElementById('gesture-modal').addEventListener('click', function(e) { if (e.target === this) closeGestureModal(); });
 
-/* ====================================================
-   ACCURACY METER
-   ==================================================== */
+/* ACCURACY METER */
 let accPollInterval = null;
 function startAccuracyPolling() {
   if (accPollInterval) return;
@@ -1555,9 +1540,7 @@ function updateAccuracyUI(pct, label) {
   else{pctEl.className='accuracy-pct';grEl.className='accuracy-grade';barEl.className='accuracy-bar-fill';grEl.textContent='🔄 Keep Adjusting';}
 }
 
-/* ====================================================
-   QUIZ
-   ==================================================== */
+/*QUIZ*/
 const quizData = [
   // ── Alphabet ──────────────────────────────────────────────────────
   {q:"Which hand shape represents the letter 'A' in ASL?",
@@ -1643,9 +1626,7 @@ function loadQuiz() {
   });
 }
 
-/* ====================================================
-   VIDEO GRID
-   ==================================================== */
+/* VIDEO GRID */
 const VIDEO_LECTURES=[
   {id:'0FcwzMq4iWg',title:'Introduction to Sign Language',desc:'Fundamentals of sign language communication.'},
   {id:'_c--P6VRTUo',title:'Common Phrases & Greetings',desc:'Essential everyday signs and expressions.'},
@@ -1671,9 +1652,7 @@ function buildVideoGrid() {
   });
 }
 
-/* ====================================================
-   GAME GRID
-   ==================================================== */
+/* GAME GRID*/
 const GAME_VIDEOS=[
   {id:'01TdshgZGZo',title:'Sign Speed Challenge',desc:'Race against time to identify signs!',level:'Beginner'},
   {id:'-bjhPzKrmGc',title:'Memory Match Game',desc:'Match hand signs with their meanings.',level:'Intermediate'},
@@ -1695,9 +1674,7 @@ function buildGameGrid() {
   });
 }
 
-/* ====================================================
-   GAME TAB SWITCHER
-   ==================================================== */
+/* GAME TAB SWITCHER*/
 function switchGameTab(tab) {
   document.querySelectorAll('.game-subsection').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.game-tab-btn').forEach(el=>el.classList.remove('active'));
@@ -1707,9 +1684,7 @@ function switchGameTab(tab) {
   if (tab !== 'sentence') stopSentenceBuilder();
 }
 
-/* ====================================================
-   SIGN-OFF CHALLENGE
-   ==================================================== */
+/* SIGN-OFF CHALLENGE*/
 const SIGNOFF_WORDS=['4','5','M','L','K','J','I','H','G','F','A','B','C','D','E'];
 const SIGNOFF_DURATION=10, SIGNOFF_ROUNDS=10;
 let signoffActive=false,signoffWords=[],signoffCurrent=0,signoffCorrect=0,signoffMissed=0;
@@ -1817,11 +1792,7 @@ function updateSignoffStats(){
   document.getElementById('stat-missed').textContent=signoffMissed;
 }
 
-/* ====================================================
-   =====================================================
-   GAME 3: SENTENCE BUILDER
-   =====================================================
-   ==================================================== */
+/* GAME 3: SENTENCE BUILDER */
 
 /* ---------- State ---------- */
 let sbActive        = false;
@@ -2138,9 +2109,7 @@ function stopSentenceBuilder() {
   sbResetArc();
 }
 
-/* ====================================================
-   VIDEO MODAL
-   ==================================================== */
+/* VIDEO MODAL*/
 function openVideoModal(vid,title){
   document.getElementById('modal-video-title').innerHTML=`<i class="fas fa-play-circle" style="margin-right:8px;color:var(--gold)"></i>${title}`;
   document.getElementById('modal-iframe').src=`https://www.youtube.com/embed/${vid}?autoplay=1&rel=0`;
@@ -2152,9 +2121,7 @@ function closeVideoModal(){
 }
 document.getElementById('video-modal').addEventListener('click',function(e){if(e.target===this)closeVideoModal()});
 
-/* ====================================================
-   CHAT
-   ==================================================== */
+/* CHAT */
 let chatOpen=false,composeText='',currentDetectedSign='',lastAppendedSign='';
 const HOLD_MS=1500;
 let holdStart=null,holdLabel='',holdRAF=null,signNeedsReset=false,lastAddedLabel='';
@@ -2263,9 +2230,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submitChat()}
 });
 
-/* ====================================================
-   TOUR GUIDE
-   ==================================================== */
+/*TOUR GUIDE */
 const TOUR_STEPS=[
   {targetId:null,label:'Welcome',icon:'🤖',title:'Welcome to Hand Sign Learning & Recognition System',desc:'This app uses real-time computer vision to help you learn and practice sign language. Let\'s take a quick tour of every feature.',chips:[{icon:'fa-camera',text:'Live AI camera'},{icon:'fa-brain',text:'Deep learning'},{icon:'fa-comments',text:'Sign-to-chat'}]},
   {targetId:'sidebar',label:'Navigation',icon:'🗂️',title:'Navigation Sidebar',desc:'Your main navigation lives on the left. Hover to expand and reveal all section names. Click any item to switch pages.',chips:[{icon:'fa-mouse-pointer',text:'Hover to expand'},{icon:'fa-exchange-alt',text:'Switch pages'}]},
@@ -2354,21 +2319,6 @@ document.addEventListener('keydown',e=>{
 });
 window.addEventListener('resize',()=>{if(tourOpen)_positionTour(TOUR_STEPS[tourIdx])});
 
-/* ============================================================
-   BROWSER CAMERA ENGINE  v3
-   ─────────────────────────────────────────────────────────────
-   DESIGN DECISIONS (fixes from v2):
-   • MediaPipe receives the RAW (unmirrored) video frame.
-     Its landmark x-coords are therefore in raw-video space.
-   • The crop sent to /predict is taken from the RAW frame too,
-     so coordinates always match.
-   • The display canvases show the MIRRORED view (selfie-style).
-     The bounding box is flipped on draw: bx = (W - raw_x) * sx.
-   • mpHands.send() returns a Promise that resolves AFTER
-     onResults fires → we wait for it before reading lastBbox.
-   • The hands.js CDN tag is already in <head>; we do NOT load
-     it a second time.
-   ============================================================ */
 (function(){
 'use strict';
 
@@ -2413,8 +2363,6 @@ async function initMediaPipe() {
   }
 }
 
-// onResults fires synchronously inside mpHands.send().then(...)
-// so lastBbox is always fresh when we use it after the await.
 function onMpResults(results) {
   if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
     lastBbox = null;
@@ -2433,7 +2381,7 @@ function onMpResults(results) {
   }
   const pw = (mxX - mnX) * OFFSET_RATIO;
   const ph = (mxY - mnY) * OFFSET_RATIO;
-  // Coordinates in RAW (unmirrored) video space
+  
   lastBbox = {
     x1: Math.max(0, Math.round((mnX - pw) * W)),
     y1: Math.max(0, Math.round((mnY - ph) * H)),
@@ -2510,7 +2458,7 @@ async function runPredict() {
     }
 
     if (!lastBbox) {
-      // No hand visible
+      
       const r = await fetch('/predict', {
         method:'POST', headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ has_hand: false })
@@ -2569,7 +2517,6 @@ function paintAll() {
     // Bounding box — flip raw-video x to mirror-canvas x
     if (lastBbox && lastResult.label) {
       const sx = cw / VW, sy = ch / VH;
-      // Mirror: raw x1 → canvas (VW-x2)*sx, raw x2 → (VW-x1)*sx
       const bx1 = (VW - lastBbox.x2) * sx;
       const bx2 = (VW - lastBbox.x1) * sx;
       const by1 = lastBbox.y1 * sy;
@@ -2626,7 +2573,7 @@ window.showPage = function(pageId, el) {
 })(); // end camera engine IIFE
 </script>
 
-<!-- ==================== PREMIUM PARTICLE CANVAS ==================== -->
+<!-- ==================== PARTICLE CANVAS ==================== -->
 <script>
 (function(){
   const canvas = document.getElementById('bg-canvas');
