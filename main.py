@@ -12,7 +12,7 @@ import base64
 
 app = Flask(__name__)
 
-# ── Labels ────────────────────────────────────────────────────────────────────
+# Labels 
 with open("Model/labels.txt", "r") as f:
     lines = f.read().splitlines()
 
@@ -27,7 +27,7 @@ for line in lines:
 NUM_CLASSES = len(labels)
 print(f"[OK] Loaded {NUM_CLASSES} labels: {labels}")
 
-# ── TFLite model ──────────────────────────────────────────────────────────────
+#  TFLite model 
 TFLITE_PATH = "Model/model.tflite"
 
 interpreter = tf.lite.Interpreter(model_path=TFLITE_PATH)
@@ -55,7 +55,7 @@ interpreter.invoke()
 _ = interpreter.get_tensor(output_details[0]['index'])
 print("[OK] Model warmed up.")
 
-# ── Per-session state (single user; extend to sessions for multi-user) ────────
+#  Per-session state 
 ema_pred         = None
 recent_indices   = []
 hold_counter     = 0
@@ -66,7 +66,7 @@ current_sign_confidence = 0.0
 sentence   = ""
 last_added = ""
 
-# ── Thresholds ────────────────────────────────────────────────────────────────
+#  Thresholds 
 EMA_ALPHA        = 0.35
 CONF_THRESHOLD   = 0.55
 STABILITY_THRESH = 0.70
@@ -76,7 +76,7 @@ HOLD_FRAMES      = 10
 NO_HAND_GRACE    = 8
 STABILITY_WINDOW = 12
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+#  Helpers 
 def tflite_predict(img_array: np.ndarray) -> np.ndarray:
     interpreter.set_tensor(input_details[0]['index'], img_array)
     interpreter.invoke()
@@ -105,7 +105,7 @@ def is_ambiguous(pred: np.ndarray, margin: float = AMBIGUITY_MARGIN) -> bool:
     sorted_p = np.sort(pred)[::-1]
     return (sorted_p[0] - sorted_p[1]) < margin
 
-# ── Routes ────────────────────────────────────────────────────────────────────
+# Routes 
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -158,26 +158,10 @@ def gestures(category):
         })
     return jsonify({"data": []})
 
-# ── /predict  (replaces /video_feed) ─────────────────────────────────────────
+# predict  
 @app.route('/predict', methods=['POST'])
 def predict():
-    """
-    Receives a base64-encoded JPEG crop of the hand region from the browser,
-    runs TFLite inference, updates session state, and returns JSON.
-
-    Request body (JSON):
-        { "image": "<base64 JPEG string>", "has_hand": true/false }
-
-    Response (JSON):
-        {
-          "label": "A",
-          "confidence": 87.3,
-          "stability": 75,
-          "hold_counter": 3,
-          "hold_total": 10,
-          "sentence": "HELLO "
-        }
-    """
+   
     global ema_pred, recent_indices, hold_counter, hold_label
     global no_hand_frames, current_sign_label, current_sign_confidence
     global sentence, last_added
@@ -213,10 +197,7 @@ def predict():
         crop_bgr  = cv2.imdecode(img_np, cv2.IMREAD_COLOR)
         if crop_bgr is None or crop_bgr.size == 0:
             raise ValueError("Could not decode image")
-        # NOTE: Do NOT flip here. The browser crops from the raw (unmirrored)
-        # video frame and sends that directly. The old server-side pipeline
-        # flipped the full frame before cropping; doing it again on the crop
-        # would double-mirror the hand and break recognition.
+       
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
